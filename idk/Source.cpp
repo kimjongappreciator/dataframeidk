@@ -156,7 +156,7 @@ int main()
 	}
 	return 0;
 	
-
+	//debug//
 	/*deleteRow(upc, 2);
 	deleteCol(upc, 3);*/
 	/*edit(upc, 1, 2, "69");
