@@ -15,9 +15,10 @@ void menu()
 void menufiltrar(matrix& a)
 {
 	string dat;
+	char xd;
 	int col;
 	int dato;
-	cout << "1) comienza con, 2) termina con, 3) mayor que, 4) menor que, 5) igual que, 6) exportar";
+	cout << "1) comienza con, 2) termina con, 3) mayor que, 4) menor que, 5) igual que, 6) exportar" << endl;
 	while (true)
 	{
 		if (_kbhit())
@@ -32,14 +33,17 @@ void menufiltrar(matrix& a)
 				startsw(a, col, dat);
 				printMatrix(a);
 				menufiltrar(a);
+				
 			}
 			else if (op == '2')
 			{
 				cout << "ingrese letras o numeros finales: ";
-				cin >> dat;
+				cin >> xd;
+				cout << endl;
 				cout << "ingrese columna que desea filtrar: ";
 				cin >> col;
-				endsw(a, col, dat);
+				cout << endl;
+				endsw(a, col, xd);
 				printMatrix(a);
 				menufiltrar(a);
 			}
@@ -107,6 +111,7 @@ int main()
 			if (opt == '4') menufiltrar(upc);
 			else if (opt == '1') {
 				exportm(upc);
+				cout << "exportado existoso" << endl;
 				break;
 			
 			}
@@ -129,7 +134,8 @@ int main()
 				cout << "ingrese columna a indexar: ";
 				cin >> colindex;
 				indexcol(upc, colindex);
-				printMatrix(upc);
+				orden(upc);
+				/*printMatrix(upc);*/
 				menu();
 			}
 			else if (opt == '6')
@@ -147,8 +153,11 @@ int main()
 			}
 			else if (opt == '7')
 			{
-				sortx(upc); 
+				sortm(upc); 
+				cout << "Ordenado existoso" << endl;
+				
 				printMatrix(upc);
+				return 0;
 			}
 		}
 
@@ -156,7 +165,7 @@ int main()
 	}
 	return 0;
 	
-	//debug//
+
 	/*deleteRow(upc, 2);
 	deleteCol(upc, 3);*/
 	/*edit(upc, 1, 2, "69");
@@ -172,5 +181,3 @@ int main()
 	//exportm(upc);
 	//
 }
-
-//====================================================================== 
