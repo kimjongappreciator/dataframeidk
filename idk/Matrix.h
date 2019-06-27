@@ -78,6 +78,7 @@ void indexcol(matrix& M, int col)
 		if (i == col)
 			i++;
 	}
+	
 }
 //======================================================================
 
@@ -120,13 +121,13 @@ void startsw(matrix& M, int col, string str) {
 }
 
 //======================================================================
-void endsw(matrix& M, int col, string str) {
+void endsw(matrix& M, int col, char str) {
 	
 	int row = M.size();
 	for (int i = 1; i < row; i++)
 	{
-		
-		if (!M[i][col].find_last_of(str, M[i][col].size()) == 0) // hay un error aca aun no lo arreglo
+		char a = M[i][col].back();
+		if (a != str)
 		{
 			deleteRow(M, i);
 			i--;
@@ -173,12 +174,12 @@ void filtermajor(matrix& M, int col, int str) {
 
 //======================================================================
 
-void sortm(matrix& M)//este es un sort del stl
+void sortm(matrix& M)//este es un sort del stl usar este para mejores resultados
 {
 		sort(M.begin()+1, M.end()); 
 }
 //======================================================================
-void sortx(matrix& M) //este es un sort propio pero no ignora la primera fila al reordenar
+void sortx(matrix& M) //este es un sort opcional, no ignora la primera fila al reordenar 
 {
 	if (M.size() <= 1) return;
 
@@ -195,7 +196,7 @@ void sortx(matrix& M) //este es un sort propio pero no ignora la primera fila al
 	sortx(right);
 	mergeSort(left, right, M);
 }
-void mergeSort(matrix& left, matrix& right, matrix& bars) //este sort es necesario para que el sortx funcione
+void mergeSort(matrix& left, matrix& right, matrix& bars) 
 {
 	int nL = left.size();
 	int nR = right.size();
@@ -221,6 +222,85 @@ void mergeSort(matrix& left, matrix& right, matrix& bars) //este sort es necesar
 		bars[i] = right[k];
 		k++; i++;
 	}
+}
+void heapify(string* arr, int n, int i)
+{
+	int largest = i;
+	int l = 2 * i + 1;
+	int r = 2 * i + 2;
+
+
+	if (l < n && arr[l] > arr[largest])
+		largest = l;
+
+	if (r < n && arr[r] > arr[largest])
+		largest = r;
+
+
+	if (largest != i) {
+		swap(arr[i], arr[largest]);
+		heapify(arr, n, largest);
+	}
+}
+
+
+//=========================== 
+void heapSort(string* arr, int n) //sort opcional aun en debugging
+{
+
+	for (int i = n / 2 - 1; i >= 0; i--)
+		heapify(arr, n, i);
+
+	for (int i = n - 1; i >= 0; i--) {
+
+		swap(arr[0], arr[i]);
+
+		heapify(arr, i, 0);
+	}
+}
+//============================= 
+void change(matrix& M, string* arr)
+{
+	int n = M.size();
+	vec Aux;
+	
+	
+	
+	for (int i = 0; i < n; i++)
+	{
+		if (i + 2 == n)
+			break;
+		else if (arr[i] == M[i + 1][0])
+		{
+			i++;
+		}
+		else
+		{
+			Aux = M[i + 1];
+			M[i + 1] = M[i + 2];
+			M[i + 2] = Aux;
+		}
+	}
+		
+	printMatrix(M);
+}
+//=============================== 
+void orden(matrix& M)
+{
+
+	int n = M.size();
+	string* aux;
+	aux = new string[n];
+
+
+	for (int i = 1; i < n; i++)
+	{
+		aux[i - 1] = M[i][0];
+	}
+	heapSort(aux, n);
+
+
+	change(M, aux);
 }
 //======================================================================
 void exportm(const matrix& M)
